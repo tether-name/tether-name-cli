@@ -7,8 +7,11 @@ import { statusCommand } from './commands/status.js';
 import { challengeCommand } from './commands/challenge.js';
 import { signCommand } from './commands/sign.js';
 import { checkCommand } from './commands/check.js';
+import { agentCreateCommand } from './commands/agent-create.js';
+import { agentListCommand } from './commands/agent-list.js';
+import { agentDeleteCommand } from './commands/agent-delete.js';
 
-const VERSION = '1.0.1';
+const VERSION = '1.0.4';
 
 const program = new Command();
 
@@ -23,6 +26,7 @@ const addGlobalOpts = (cmd: Command): Command =>
     .option('--credential-id <id>', 'Credential ID')
     .option('--key-path <path>', 'Path to private key file')
     .option('--api-url <url>', 'Tether API base URL')
+    .option('--api-key <key>', 'API key for management operations')
     .option('--verbose', 'Enable debug output');
 
 // tether init
@@ -69,5 +73,35 @@ addGlobalOpts(
     .description('Check the status of a challenge by code')
     .option('--json', 'Output result as JSON'),
 ).action((code, opts) => checkCommand(code, opts));
+
+// tether agent (subcommand group)
+const agent = program
+  .command('agent')
+  .description('Manage agents');
+
+// tether agent create <name>
+addGlobalOpts(
+  agent
+    .command('create <name>')
+    .description('Create a new agent')
+    .option('--description <text>', 'Agent description')
+    .option('--json', 'Output result as JSON'),
+).action((name, opts) => agentCreateCommand(name, opts));
+
+// tether agent list
+addGlobalOpts(
+  agent
+    .command('list')
+    .description('List all agents')
+    .option('--json', 'Output result as JSON'),
+).action((opts) => agentListCommand(opts));
+
+// tether agent delete <id>
+addGlobalOpts(
+  agent
+    .command('delete <id>')
+    .description('Delete an agent by ID')
+    .option('--json', 'Output result as JSON'),
+).action((id, opts) => agentDeleteCommand(id, opts));
 
 program.parse();
