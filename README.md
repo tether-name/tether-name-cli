@@ -1,11 +1,20 @@
 # tether-name-cli
 
+[![npm](https://img.shields.io/npm/v/tether-name-cli)](https://www.npmjs.com/package/tether-name-cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 CLI for [tether.name](https://tether.name) — AI agent identity verification.
 
 ## Install
 
 ```bash
 npm install -g tether-name-cli
+```
+
+Or use without installing:
+
+```bash
+npx tether-name-cli verify
 ```
 
 Requires Node.js >= 18.
@@ -24,31 +33,22 @@ tether verify
 
 ### `tether init`
 
-Interactive setup wizard. Walks you through:
-
-1. Entering your credential ID (or reads `TETHER_CREDENTIAL_ID`)
-2. Providing a private key path (or reads `TETHER_PRIVATE_KEY_PATH`)
-3. Optionally generating a new RSA-2048 keypair
+Interactive setup wizard. Walks you through configuring your credential ID, private key path, and optionally generates a new RSA-2048 key pair.
 
 Saves configuration to `~/.tether/config.json`.
 
 ### `tether verify`
 
-Performs a full verification cycle:
-
-1. Requests a challenge from the Tether API
-2. Signs it with your private key
-3. Submits proof and displays the result
+Perform a full identity verification — requests a challenge, signs it, submits proof, and displays the result.
 
 ```bash
 tether verify
-tether verify --json         # Machine-readable output
-tether verify --verbose      # Debug output
+tether verify --json    # Machine-readable output
 ```
 
 ### `tether status`
 
-Shows current configuration — credential ID (masked), key file path, and API URL.
+Show your current configuration — credential ID (masked), key file path, and API URL.
 
 ```bash
 tether status
@@ -57,7 +57,7 @@ tether status --json
 
 ### `tether challenge`
 
-Request a challenge code from the API and print it.
+Request a new challenge code from the Tether API and print it.
 
 ```bash
 tether challenge
@@ -68,7 +68,7 @@ tether challenge
 Sign a challenge string with your private key and print the proof.
 
 ```bash
-tether sign abc123
+tether sign "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
 ```
 
 ### `tether check <code>`
@@ -76,36 +76,57 @@ tether sign abc123
 Check the status of a challenge by its code.
 
 ```bash
-tether check abc123
-tether check abc123 --json
+tether check "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+tether check "a1b2c3d4-e5f6-7890-abcd-ef1234567890" --json
 ```
 
 ## Configuration
 
-Config is resolved in this order (first match wins):
+The CLI resolves configuration in this order (first wins):
 
 1. **CLI flags** — `--credential-id`, `--key-path`, `--api-url`
 2. **Environment variables** — `TETHER_CREDENTIAL_ID`, `TETHER_PRIVATE_KEY_PATH`, `TETHER_API_URL`
-3. **Config file** — `~/.tether/config.json`
+3. **Config file** — `~/.tether/config.json` (created by `tether init`)
 
-### Environment Variables
+### Global Flags
 
-| Variable | Description |
+| Flag | Description |
 |---|---|
-| `TETHER_CREDENTIAL_ID` | Your agent credential ID |
-| `TETHER_PRIVATE_KEY_PATH` | Path to your private key file |
-| `TETHER_API_URL` | API base URL (default: `https://api.tether.name`) |
+| `--credential-id <id>` | Override credential ID |
+| `--key-path <path>` | Override private key file path |
+| `--api-url <url>` | Override API base URL |
+| `--verbose` | Enable debug output |
+| `--json` | Machine-readable JSON output (on supported commands) |
 
-## Development
+## Example Workflow
 
 ```bash
-git clone https://github.com/theJawnnybot/tether-name-cli.git
-cd tether-name-cli
-npm install
-npm run build
-npm test
+# 1. Set up credentials
+tether init
+
+# 2. Check your config
+tether status
+
+# 3. Verify your identity
+tether verify
+
+# 4. Debug: manually request and sign a challenge
+tether challenge
+tether sign "the-challenge-code"
+tether check "the-challenge-code"
 ```
+
+## Documentation
+
+Full documentation at [docs.tether.name](https://docs.tether.name/cli/).
 
 ## License
 
-MIT
+[MIT](LICENSE)
+
+## Links
+
+- 🌐 [Tether Website](https://tether.name)
+- 📘 [Documentation](https://docs.tether.name)
+- 📦 [npm Package](https://www.npmjs.com/package/tether-name-cli)
+- 💻 [GitHub](https://github.com/tether-name/tether-name-cli)

@@ -8,7 +8,7 @@ import { challengeCommand } from './commands/challenge.js';
 import { signCommand } from './commands/sign.js';
 import { checkCommand } from './commands/check.js';
 
-const VERSION = '0.1.0';
+const VERSION = '1.0.0';
 
 const program = new Command();
 
