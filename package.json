@@ -1,0 +1,53 @@
+{
+  "name": "tether-name-cli",
+  "version": "0.1.0",
+  "description": "CLI for tether.name - AI agent identity verification",
+  "type": "module",
+  "bin": {
+    "tether": "./dist/cli.js"
+  },
+  "main": "./dist/cli.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "tether",
+    "tether.name",
+    "agent",
+    "identity",
+    "verification",
+    "ai",
+    "cli"
+  ],
+  "author": "Commit 451 <jawnnypoo@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://tether.name",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theJawnnybot/tether-name-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theJawnnybot/tether-name-cli/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "tether-name": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

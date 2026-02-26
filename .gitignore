@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tgz
+
+# Private keys
+*.pem
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
