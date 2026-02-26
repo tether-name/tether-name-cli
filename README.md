@@ -116,6 +116,31 @@ tether sign "the-challenge-code"
 tether check "the-challenge-code"
 ```
 
+## Publishing
+
+Published to npm automatically via GitHub Actions when a release is created.
+
+### Version checklist
+
+Update the version in:
+
+1. `package.json` → `"version"`
+2. `src/cli.ts` → `VERSION` constant
+
+### Steps
+
+1. Update version numbers above (they must match)
+2. Commit and push to `main`
+3. Create a GitHub release with a matching tag (e.g. `v1.0.0`)
+4. CI builds and publishes to npm automatically
+
+### Manual publish (if needed)
+
+```bash
+npm run build
+npm publish --access public
+```
+
 ## Documentation
 
 Full documentation at [docs.tether.name](https://docs.tether.name/cli/).
