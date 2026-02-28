@@ -17,7 +17,7 @@ Or use without installing:
 npx tether-name-cli verify
 ```
 
-Requires Node.js >= 18.
+Requires Node.js >= 20.
 
 ## Quick Start
 
