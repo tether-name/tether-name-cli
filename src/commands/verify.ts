@@ -22,12 +22,10 @@ export async function verifyCommand(opts: CLIFlags & { json?: boolean; verbose?:
   try {
     printVerbose(`Credential ID: ${config.credentialId}`, verbose);
     printVerbose(`Key path: ${config.keyPath}`, verbose);
-    printVerbose(`API URL: ${config.apiUrl}`, verbose);
 
     const client = new TetherClient({
       credentialId: config.credentialId,
       privateKeyPath: config.keyPath,
-      baseUrl: config.apiUrl,
     });
 
     printVerbose('Requesting challenge...', verbose);

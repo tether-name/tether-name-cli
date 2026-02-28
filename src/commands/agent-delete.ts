@@ -18,12 +18,10 @@ export async function agentDeleteCommand(
   const verbose = opts.verbose ?? false;
 
   try {
-    printVerbose(`API URL: ${config.apiUrl}`, verbose);
     printVerbose(`Deleting agent ${id}...`, verbose);
 
     const client = new TetherClient({
       apiKey: config.apiKey,
-      baseUrl: config.apiUrl,
     });
 
     await client.deleteAgent(id);

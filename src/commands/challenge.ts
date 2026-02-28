@@ -18,12 +18,10 @@ export async function challengeCommand(opts: CLIFlags & { verbose?: boolean }): 
   }
 
   try {
-    printVerbose(`API URL: ${config.apiUrl}`, opts.verbose ?? false);
 
     const client = new TetherClient({
       credentialId: config.credentialId,
       privateKeyPath: config.keyPath,
-      baseUrl: config.apiUrl,
     });
 
     const code = await client.requestChallenge();

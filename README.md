@@ -84,8 +84,6 @@ tether check "a1b2c3d4-e5f6-7890-abcd-ef1234567890" --json
 
 The CLI resolves configuration in this order (first wins):
 
-1. **CLI flags** — `--credential-id`, `--key-path`, `--api-url`
-2. **Environment variables** — `TETHER_CREDENTIAL_ID`, `TETHER_PRIVATE_KEY_PATH`, `TETHER_API_URL`
 3. **Config file** — `~/.tether/config.json` (created by `tether init`)
 
 ### Global Flags
@@ -94,7 +92,6 @@ The CLI resolves configuration in this order (first wins):
 |---|---|
 | `--credential-id <id>` | Override credential ID |
 | `--key-path <path>` | Override private key file path |
-| `--api-url <url>` | Override API base URL |
 | `--verbose` | Enable debug output |
 | `--json` | Machine-readable JSON output (on supported commands) |
 

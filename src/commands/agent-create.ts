@@ -18,12 +18,10 @@ export async function agentCreateCommand(
   const verbose = opts.verbose ?? false;
 
   try {
-    printVerbose(`API URL: ${config.apiUrl}`, verbose);
     printVerbose(`Creating agent "${name}"...`, verbose);
 
     const client = new TetherClient({
       apiKey: config.apiKey,
-      baseUrl: config.apiUrl,
     });
 
     const agent = await client.createAgent(name, opts.description || '');

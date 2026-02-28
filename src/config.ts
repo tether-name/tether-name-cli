@@ -5,20 +5,18 @@ import { homedir } from 'os';
 export interface TetherConfig {
   credentialId: string;
   keyPath: string;
-  apiUrl: string;
   apiKey: string;
 }
 
 export interface CLIFlags {
   credentialId?: string;
   keyPath?: string;
-  apiUrl?: string;
   apiKey?: string;
 }
 
 const CONFIG_DIR = join(homedir(), '.tether');
+export const API_URL = 'https://api.tether.name';
 const CONFIG_FILE = join(CONFIG_DIR, 'config.json');
-const DEFAULT_API_URL = 'https://api.tether.name';
 
 export function getConfigPath(): string {
   return CONFIG_FILE;
@@ -59,11 +57,6 @@ export function resolveConfig(flags: CLIFlags = {}): TetherConfig {
       process.env.TETHER_PRIVATE_KEY_PATH ||
       file.keyPath ||
       '',
-    apiUrl:
-      flags.apiUrl ||
-      process.env.TETHER_API_URL ||
-      file.apiUrl ||
-      DEFAULT_API_URL,
     apiKey:
       flags.apiKey ||
       process.env.TETHER_API_KEY ||

@@ -17,12 +17,10 @@ export async function agentListCommand(
   const verbose = opts.verbose ?? false;
 
   try {
-    printVerbose(`API URL: ${config.apiUrl}`, verbose);
     printVerbose('Listing agents...', verbose);
 
     const client = new TetherClient({
       apiKey: config.apiKey,
-      baseUrl: config.apiUrl,
     });
 
     const agents = await client.listAgents();

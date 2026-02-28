@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { resolveConfig, type CLIFlags } from '../config.js';
+import { resolveConfig, API_URL, type CLIFlags } from '../config.js';
 import { printError, printVerbose } from '../utils/display.js';
 
 interface ChallengeStatusResponse {
@@ -16,7 +16,7 @@ export async function checkCommand(
   opts: CLIFlags & { json?: boolean; verbose?: boolean },
 ): Promise<void> {
   const config = resolveConfig(opts);
-  const baseUrl = config.apiUrl;
+  const baseUrl = API_URL;
   const verbose = opts.verbose ?? false;
 
   try {

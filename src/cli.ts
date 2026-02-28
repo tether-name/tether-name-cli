@@ -25,7 +25,6 @@ const addGlobalOpts = (cmd: Command): Command =>
   cmd
     .option('--credential-id <id>', 'Credential ID')
     .option('--key-path <path>', 'Path to private key file')
-    .option('--api-url <url>', 'Tether API base URL')
     .option('--api-key <key>', 'API key for management operations')
     .option('--verbose', 'Enable debug output');
 
