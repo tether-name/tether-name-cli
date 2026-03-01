@@ -15,7 +15,7 @@ interface ChallengeStatusResponse {
   [key: string]: unknown;
 }
 
-function formatEpochMs(value?: number): string | null {
+export function formatEpochMs(value?: number): string | null {
   if (typeof value !== 'number' || Number.isNaN(value)) return null;
   return new Date(value).toISOString();
 }
