@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import type { VerificationResult } from 'tether-name';
-import { API_URL, type TetherConfig } from '../config.js';
+import { type TetherConfig } from '../config.js';
 
 export function maskId(id: string): string {
   if (id.length <= 4) return id;
@@ -56,7 +56,7 @@ export function printStatus(config: TetherConfig, keyExists: boolean): void {
   if (config.keyPath) {
     console.log(`  Key exists:  ${keyExists ? chalk.green('yes') : chalk.red('no')}`);
   }
-  console.log(`  API URL:     ${API_URL}`);
+  console.log(`  API URL:     ${config.apiUrl}`);
   console.log();
 }
 
@@ -65,7 +65,7 @@ export function printStatusJSON(config: TetherConfig, keyExists: boolean): void 
     credentialId: config.credentialId ? maskId(config.credentialId) : null,
     keyPath: config.keyPath || null,
     keyExists,
-    apiUrl: API_URL,
+    apiUrl: config.apiUrl,
   }, null, 2));
 }
 
