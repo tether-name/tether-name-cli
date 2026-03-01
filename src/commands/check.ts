@@ -3,12 +3,21 @@ import { resolveConfig, type CLIFlags } from '../config.js';
 import { printError, printVerbose } from '../utils/display.js';
 
 interface ChallengeStatusResponse {
-  code: string;
+  challenge: string;
   status: string;
-  credentialId?: string;
-  createdAt?: string;
-  verifiedAt?: string;
+  createdAt?: number;
+  verifiedAt?: number;
+  agentName?: string;
+  poll?: {
+    intervalMs: number;
+    maxAttempts: number;
+  };
   [key: string]: unknown;
+}
+
+function formatEpochMs(value?: number): string | null {
+  if (typeof value !== 'number' || Number.isNaN(value)) return null;
+  return new Date(value).toISOString();
 }
 
 export async function checkCommand(
@@ -39,16 +48,22 @@ export async function checkCommand(
     if (opts.json) {
       console.log(JSON.stringify(data, null, 2));
     } else {
+      const createdAt = formatEpochMs(data.createdAt);
+      const verifiedAt = formatEpochMs(data.verifiedAt);
+
       console.log();
       console.log(chalk.bold('  Challenge Status'));
       console.log(chalk.dim('  ' + '─'.repeat(30)));
-      console.log(`  Code:     ${data.code}`);
+      console.log(`  Code:     ${data.challenge || code}`);
       console.log(`  Status:   ${data.status}`);
-      if (data.createdAt) {
-        console.log(`  Created:  ${data.createdAt}`);
+      if (data.agentName) {
+        console.log(`  Agent:    ${data.agentName}`);
       }
-      if (data.verifiedAt) {
-        console.log(`  Verified: ${data.verifiedAt}`);
+      if (createdAt) {
+        console.log(`  Created:  ${createdAt}`);
+      }
+      if (verifiedAt) {
+        console.log(`  Verified: ${verifiedAt}`);
       }
       console.log();
     }
