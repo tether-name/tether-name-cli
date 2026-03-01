@@ -11,7 +11,7 @@ import { agentCreateCommand } from './commands/agent-create.js';
 import { agentListCommand } from './commands/agent-list.js';
 import { agentDeleteCommand } from './commands/agent-delete.js';
 
-const VERSION = '1.0.5';
+const VERSION = '1.0.7';
 
 const program = new Command();
 
