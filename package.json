@@ -4,7 +4,7 @@
   "description": "CLI for tether.name - AI agent identity verification",
   "type": "module",
   "bin": {
-    "tether": "./dist/cli.js"
+    "tether": "dist/cli.js"
   },
   "main": "./dist/cli.js",
   "files": [
