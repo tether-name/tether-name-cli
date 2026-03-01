@@ -5,8 +5,8 @@ import { printVerifyResult, printVerifyResultJSON, printError, printVerbose } fr
 export async function verifyCommand(opts: CLIFlags & { json?: boolean; verbose?: boolean }): Promise<void> {
   const config = resolveConfig(opts);
 
-  if (!config.credentialId) {
-    printError('No credential ID configured. Run "tether init" or set TETHER_CREDENTIAL_ID.');
+  if (!config.agentId) {
+    printError('No agent ID configured. Run "tether init" or set TETHER_AGENT_ID.');
     process.exitCode = 1;
     return;
   }
@@ -20,11 +20,11 @@ export async function verifyCommand(opts: CLIFlags & { json?: boolean; verbose?:
   const verbose = opts.verbose ?? false;
 
   try {
-    printVerbose(`Credential ID: ${config.credentialId}`, verbose);
+    printVerbose(`Agent ID: ${config.agentId}`, verbose);
     printVerbose(`Key path: ${config.keyPath}`, verbose);
 
     const client = new TetherClient({
-      credentialId: config.credentialId,
+      agentId: config.agentId,
       privateKeyPath: config.keyPath,
     });
 

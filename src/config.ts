@@ -3,13 +3,13 @@ import { join } from 'path';
 import { homedir } from 'os';
 
 export interface TetherConfig {
-  credentialId: string;
+  agentId: string;
   keyPath: string;
   apiKey: string;
 }
 
 export interface CLIFlags {
-  credentialId?: string;
+  agentId?: string;
   keyPath?: string;
   apiKey?: string;
 }
@@ -46,10 +46,10 @@ export function resolveConfig(flags: CLIFlags = {}): TetherConfig {
   const file = loadConfigFile();
 
   return {
-    credentialId:
-      flags.credentialId ||
-      process.env.TETHER_CREDENTIAL_ID ||
-      file.credentialId ||
+    agentId:
+      flags.agentId ||
+      process.env.TETHER_AGENT_ID ||
+      file.agentId ||
       '',
     keyPath:
       flags.keyPath ||

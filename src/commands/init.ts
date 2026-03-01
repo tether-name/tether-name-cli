@@ -20,18 +20,18 @@ export async function initCommand(opts: { verbose?: boolean }): Promise<void> {
     console.log(chalk.dim('  ' + '─'.repeat(30)));
     console.log();
 
-    // Credential ID
-    const envCredential = process.env.TETHER_CREDENTIAL_ID;
-    let credentialId: string;
-    if (envCredential) {
-      console.log(chalk.dim(`  Using TETHER_CREDENTIAL_ID from environment`));
-      credentialId = envCredential;
+    // Agent ID
+    const envAgentId = process.env.TETHER_AGENT_ID;
+    let agentId: string;
+    if (envAgentId) {
+      console.log(chalk.dim(`  Using TETHER_AGENT_ID from environment`));
+      agentId = envAgentId;
     } else {
-      credentialId = await prompt(rl, '  Credential ID: ');
+      agentId = await prompt(rl, '  Agent ID: ');
     }
 
-    if (!credentialId) {
-      console.log(chalk.red('\n  Credential ID is required.'));
+    if (!agentId) {
+      console.log(chalk.red('\n  Agent ID is required.'));
       return;
     }
 
@@ -64,7 +64,7 @@ export async function initCommand(opts: { verbose?: boolean }): Promise<void> {
     }
 
     // Save config
-    saveConfig({ credentialId, keyPath });
+    saveConfig({ agentId, keyPath });
 
     console.log();
     console.log(chalk.green('  ✓ Configuration saved to ' + getConfigPath()));

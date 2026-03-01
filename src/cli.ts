@@ -23,7 +23,7 @@ program
 // Global options
 const addGlobalOpts = (cmd: Command): Command =>
   cmd
-    .option('--credential-id <id>', 'Credential ID')
+    .option('--agent-id <id>', 'Agent ID')
     .option('--key-path <path>', 'Path to private key file')
     .option('--api-key <key>', 'API key for management operations')
     .option('--verbose', 'Enable debug output');

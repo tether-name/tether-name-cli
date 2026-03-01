@@ -51,7 +51,7 @@ export function printStatus(config: TetherConfig, keyExists: boolean): void {
   console.log();
   console.log(chalk.bold('  Tether Configuration'));
   console.log(chalk.dim('  ' + '─'.repeat(30)));
-  console.log(`  Credential:  ${config.credentialId ? maskId(config.credentialId) : chalk.dim('(not set)')}`);
+  console.log(`  Agent ID:    ${config.agentId ? maskId(config.agentId) : chalk.dim('(not set)')}`);
   console.log(`  Key path:    ${config.keyPath || chalk.dim('(not set)')}`);
   if (config.keyPath) {
     console.log(`  Key exists:  ${keyExists ? chalk.green('yes') : chalk.red('no')}`);
@@ -61,7 +61,7 @@ export function printStatus(config: TetherConfig, keyExists: boolean): void {
 
 export function printStatusJSON(config: TetherConfig, keyExists: boolean): void {
   console.log(JSON.stringify({
-    credentialId: config.credentialId ? maskId(config.credentialId) : null,
+    agentId: config.agentId ? maskId(config.agentId) : null,
     keyPath: config.keyPath || null,
     keyExists,
   }, null, 2));

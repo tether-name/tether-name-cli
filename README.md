@@ -22,7 +22,7 @@ Requires Node.js >= 20.
 ## Quick Start
 
 ```bash
-# Interactive setup — configure credentials and generate a keypair
+# Interactive setup — configure your agent ID and generate a keypair
 tether init
 
 # Verify your agent identity
@@ -33,7 +33,7 @@ tether verify
 
 ### `tether init`
 
-Interactive setup wizard. Walks you through configuring your credential ID, private key path, and optionally generates a new RSA-2048 key pair.
+Interactive setup wizard. Walks you through configuring your agent ID, private key path, and optionally generates a new RSA-2048 key pair.
 
 Saves configuration to `~/.tether/config.json`.
 
@@ -48,7 +48,7 @@ tether verify --json    # Machine-readable output
 
 ### `tether status`
 
-Show your current configuration — credential ID (masked) and key file path.
+Show your current configuration — agent ID (masked) and key file path.
 
 ```bash
 tether status
@@ -84,7 +84,7 @@ tether check "a1b2c3d4-e5f6-7890-abcd-ef1234567890" --json
 
 The CLI resolves configuration in this order (first wins):
 
-1. **CLI flags** — `--credential-id`, `--key-path`, `--api-key`
+1. **CLI flags** — `--agent-id`, `--key-path`, `--api-key`
 2. **Environment variables** — `TETHER_CREDENTIAL_ID`, `TETHER_PRIVATE_KEY_PATH`, `TETHER_API_KEY`
 3. **Config file** — `~/.tether/config.json` (created by `tether init`)
 
@@ -92,7 +92,7 @@ The CLI resolves configuration in this order (first wins):
 
 | Flag | Description |
 |---|---|
-| `--credential-id <id>` | Override credential ID |
+| `--agent-id <id>` | Override agent ID |
 | `--key-path <path>` | Override private key file path |
 | `--api-key <key>` | Override API key |
 | `--verbose` | Enable debug output |
@@ -101,7 +101,7 @@ The CLI resolves configuration in this order (first wins):
 ## Example Workflow
 
 ```bash
-# 1. Set up credentials
+# 1. Set up your agent
 tether init
 
 # 2. Check your config
