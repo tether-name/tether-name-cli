@@ -48,7 +48,6 @@ describe('checkCommand', () => {
 
   beforeEach(() => {
     process.exitCode = undefined as unknown as number;
-    delete process.env.TETHER_API_URL;
   });
 
   afterEach(() => {
@@ -156,19 +155,5 @@ describe('checkCommand', () => {
     vi.restoreAllMocks();
   });
 
-  it('respects custom API URL from env', async () => {
-    process.env.TETHER_API_URL = 'https://custom.api.test';
-    const apiResponse = { challenge: 'abc', status: 'pending' };
-    globalThis.fetch = mockFetchResponse(apiResponse);
-    vi.spyOn(console, 'log').mockImplementation(() => {});
 
-    await checkCommand('abc', {});
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining('https://custom.api.test/challenge/abc'),
-      expect.any(Object),
-    );
-
-    vi.restoreAllMocks();
-  });
 });

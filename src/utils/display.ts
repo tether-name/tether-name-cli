@@ -56,7 +56,6 @@ export function printStatus(config: TetherConfig, keyExists: boolean): void {
   if (config.keyPath) {
     console.log(`  Key exists:  ${keyExists ? chalk.green('yes') : chalk.red('no')}`);
   }
-  console.log(`  API URL:     ${config.apiUrl}`);
   console.log();
 }
 
@@ -65,7 +64,6 @@ export function printStatusJSON(config: TetherConfig, keyExists: boolean): void 
     credentialId: config.credentialId ? maskId(config.credentialId) : null,
     keyPath: config.keyPath || null,
     keyExists,
-    apiUrl: config.apiUrl,
   }, null, 2));
 }
 

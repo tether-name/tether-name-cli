@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { resolveConfig, type CLIFlags } from '../config.js';
+import { type CLIFlags } from '../config.js';
 import { printError, printVerbose } from '../utils/display.js';
 
 interface ChallengeStatusResponse {
@@ -24,8 +24,7 @@ export async function checkCommand(
   code: string,
   opts: CLIFlags & { json?: boolean; verbose?: boolean },
 ): Promise<void> {
-  const config = resolveConfig(opts);
-  const baseUrl = config.apiUrl;
+  const baseUrl = 'https://api.tether.name';
   const verbose = opts.verbose ?? false;
 
   try {
