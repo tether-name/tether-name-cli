@@ -85,7 +85,7 @@ tether check "a1b2c3d4-e5f6-7890-abcd-ef1234567890" --json
 The CLI resolves configuration in this order (first wins):
 
 1. **CLI flags** — `--agent-id`, `--key-path`, `--api-key`
-2. **Environment variables** — `TETHER_CREDENTIAL_ID`, `TETHER_PRIVATE_KEY_PATH`, `TETHER_API_KEY`
+2. **Environment variables** — `TETHER_AGENT_ID`, `TETHER_PRIVATE_KEY_PATH`, `TETHER_API_KEY`
 3. **Config file** — `~/.tether/config.json` (created by `tether init`)
 
 ### Global Flags
