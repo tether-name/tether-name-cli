@@ -12,7 +12,7 @@ import { agentListCommand } from './commands/agent-list.js';
 import { agentDeleteCommand } from './commands/agent-delete.js';
 import { domainListCommand } from './commands/domain-list.js';
 
-const VERSION = '2.0.3';
+const VERSION = '2.0.4';
 
 const program = new Command();
 
