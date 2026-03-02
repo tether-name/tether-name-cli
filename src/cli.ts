@@ -10,6 +10,7 @@ import { checkCommand } from './commands/check.js';
 import { agentCreateCommand } from './commands/agent-create.js';
 import { agentListCommand } from './commands/agent-list.js';
 import { agentDeleteCommand } from './commands/agent-delete.js';
+import { domainListCommand } from './commands/domain-list.js';
 
 const VERSION = '2.0.2';
 
@@ -84,6 +85,7 @@ addGlobalOpts(
     .command('create <name>')
     .description('Create a new agent')
     .option('--description <text>', 'Agent description')
+    .option('--domain-id <id>', 'Assign a verified domain to this agent')
     .option('--json', 'Output result as JSON'),
 ).action((name, opts) => agentCreateCommand(name, opts));
 
@@ -102,5 +104,18 @@ addGlobalOpts(
     .description('Delete an agent by ID')
     .option('--json', 'Output result as JSON'),
 ).action((id, opts) => agentDeleteCommand(id, opts));
+
+// tether domain (subcommand group)
+const domain = program
+  .command('domain')
+  .description('Manage domains');
+
+// tether domain list
+addGlobalOpts(
+  domain
+    .command('list')
+    .description('List all verified domains')
+    .option('--json', 'Output result as JSON'),
+).action((opts) => domainListCommand(opts));
 
 program.parse();

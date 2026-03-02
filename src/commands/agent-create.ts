@@ -5,7 +5,7 @@ import { printError, printVerbose } from '../utils/display.js';
 
 export async function agentCreateCommand(
   name: string,
-  opts: CLIFlags & { description?: string; json?: boolean; verbose?: boolean },
+  opts: CLIFlags & { description?: string; domainId?: string; json?: boolean; verbose?: boolean },
 ): Promise<void> {
   const config = resolveConfig(opts);
 
@@ -24,7 +24,7 @@ export async function agentCreateCommand(
       apiKey: config.apiKey,
     });
 
-    const agent = await client.createAgent(name, opts.description || '');
+    const agent = await client.createAgent(name, opts.description || '', opts.domainId);
 
     if (opts.json) {
       console.log(JSON.stringify(agent, null, 2));
@@ -36,6 +36,9 @@ export async function agentCreateCommand(
       console.log(`  Name:               ${agent.agentName}`);
       if (agent.description) {
         console.log(`  Description:        ${agent.description}`);
+      }
+      if (agent.domainId) {
+        console.log(`  Domain ID:          ${agent.domainId}`);
       }
       console.log(`  Registration Token: ${chalk.yellow(agent.registrationToken)}`);
       console.log();

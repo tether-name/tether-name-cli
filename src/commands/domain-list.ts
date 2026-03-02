@@ -3,7 +3,7 @@ import { TetherClient } from 'tether-name';
 import { resolveConfig, type CLIFlags } from '../config.js';
 import { printError, printVerbose } from '../utils/display.js';
 
-export async function agentListCommand(
+export async function domainListCommand(
   opts: CLIFlags & { json?: boolean; verbose?: boolean },
 ): Promise<void> {
   const config = resolveConfig(opts);
@@ -17,37 +17,34 @@ export async function agentListCommand(
   const verbose = opts.verbose ?? false;
 
   try {
-    printVerbose('Listing agents...', verbose);
+    printVerbose('Listing domains...', verbose);
 
     const client = new TetherClient({
       apiKey: config.apiKey,
     });
 
-    const agents = await client.listAgents();
+    const domains = await client.listDomains();
 
     if (opts.json) {
-      console.log(JSON.stringify(agents, null, 2));
-    } else if (agents.length === 0) {
+      console.log(JSON.stringify(domains, null, 2));
+    } else if (domains.length === 0) {
       console.log();
-      console.log(chalk.dim('  No agents found.'));
+      console.log(chalk.dim('  No domains found.'));
+      console.log(chalk.dim('  Claim domains at https://tether.name/dashboard'));
       console.log();
     } else {
       console.log();
-      console.log(chalk.bold(`  Agents (${agents.length})`));
+      console.log(chalk.bold(`  Domains (${domains.length})`));
       console.log(chalk.dim('  ' + '─'.repeat(40)));
-      for (const agent of agents) {
-        const date = formatDate(agent.createdAt);
-        console.log(`  ${chalk.cyan(agent.agentName)} ${chalk.dim(`(${agent.id})`)}`);
-        if (agent.description) {
-          console.log(`    ${agent.description}`);
+      for (const domain of domains) {
+        const status = domain.verified
+          ? chalk.green('✓ verified')
+          : chalk.yellow('⏳ pending');
+        console.log(`  ${chalk.cyan(domain.domain)} ${status} ${chalk.dim(`(${domain.id})`)}`);
+        if (domain.verified && domain.verifiedAt) {
+          console.log(`    Verified: ${formatDate(domain.verifiedAt)}`);
         }
-        if (agent.domain) {
-          console.log(`    Domain: ${chalk.green(agent.domain)}`);
-        }
-        console.log(`    Created: ${date}`);
-        if (agent.lastVerifiedAt) {
-          console.log(`    Last verified: ${formatDate(agent.lastVerifiedAt)}`);
-        }
+        console.log(`    Created: ${formatDate(domain.createdAt)}`);
         console.log();
       }
     }
