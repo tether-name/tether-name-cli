@@ -98,6 +98,53 @@ The CLI resolves configuration in this order (first wins):
 | `--verbose` | Enable debug output |
 | `--json` | Machine-readable JSON output (on supported commands) |
 
+### Agent Management
+
+Requires an API key (`--api-key`, `TETHER_API_KEY` env var, or config file).
+
+#### `tether agent create <name>`
+
+Create a new agent.
+
+```bash
+tether agent create "my-bot" --description "My helpful bot"
+tether agent create "my-bot" --domain-id "domain-id"   # Assign a verified domain
+tether agent create "my-bot" --json
+```
+
+Returns the agent's ID, name, and a **registration token** (save it — it can't be retrieved later).
+
+#### `tether agent list`
+
+List all agents.
+
+```bash
+tether agent list
+tether agent list --json
+```
+
+#### `tether agent delete <id>`
+
+Delete an agent by ID.
+
+```bash
+tether agent delete "agent-id"
+tether agent delete "agent-id" --json
+```
+
+### Domain Management
+
+#### `tether domain list`
+
+List all registered domains for your account.
+
+```bash
+tether domain list
+tether domain list --json
+```
+
+Use the domain ID with `tether agent create --domain-id` to assign a domain to an agent. Domains are claimed and verified via the [web dashboard](https://tether.name/dashboard).
+
 ## Example Workflow
 
 ```bash
@@ -114,6 +161,13 @@ tether verify
 tether challenge
 tether sign "the-challenge-code"
 tether check "the-challenge-code"
+
+# 5. Agent management (requires API key)
+tether agent create "my-bot" --description "Helpful assistant"
+tether domain list
+tether agent create "my-bot" --domain-id "abc123"
+tether agent list
+tether agent delete "agent-id"
 ```
 
 ## Publishing
