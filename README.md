@@ -37,6 +37,8 @@ Interactive setup wizard. Walks you through configuring your agent ID, private k
 
 Generated keys are saved to `~/.tether/keys/` by default (not your current working directory) to reduce accidental git commits.
 
+If you manually choose a key path inside a git repository, `tether init` now prints a safety warning.
+
 Saves configuration to `~/.tether/config.json`.
 
 ### `tether verify`
