@@ -35,6 +35,8 @@ tether verify
 
 Interactive setup wizard. Walks you through configuring your agent ID, private key path, and optionally generates a new RSA-2048 key pair.
 
+Generated keys are saved to `~/.tether/keys/` by default (not your current working directory) to reduce accidental git commits.
+
 Saves configuration to `~/.tether/config.json`.
 
 ### `tether verify`

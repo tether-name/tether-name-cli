@@ -1,9 +1,9 @@
 import { createInterface } from 'readline';
 import { generateKeyPairSync } from 'crypto';
-import { writeFileSync, existsSync } from 'fs';
-import { resolve } from 'path';
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { resolve, join } from 'path';
 import chalk from 'chalk';
-import { saveConfig, getConfigPath } from '../config.js';
+import { saveConfig, getConfigPath, getConfigDir } from '../config.js';
 
 function prompt(rl: ReturnType<typeof createInterface>, question: string): Promise<string> {
   return new Promise((resolve) => {
@@ -46,7 +46,7 @@ export async function initCommand(opts: { verbose?: boolean }): Promise<void> {
       const genAnswer = await prompt(rl, '  Generate a new RSA keypair? (y/N): ');
 
       if (genAnswer.toLowerCase() === 'y') {
-        keyPath = await generateKeypair(opts.verbose);
+        keyPath = await generateKeypair(agentId, opts.verbose);
       } else {
         keyPath = await prompt(rl, '  Path to private key: ');
       }
@@ -74,9 +74,24 @@ export async function initCommand(opts: { verbose?: boolean }): Promise<void> {
   }
 }
 
-function generateKeypair(verbose?: boolean): string {
-  const privatePath = resolve('.tether-private-key.pem');
-  const publicPath = resolve('.tether-public-key.pem');
+function generateKeypair(agentId: string, verbose?: boolean): string {
+  const keysDir = join(getConfigDir(), 'keys');
+  mkdirSync(keysDir, { recursive: true });
+
+  const safeAgent = (agentId || 'agent')
+    .trim()
+    .replace(/[^a-zA-Z0-9-_]/g, '-')
+    .slice(0, 48) || 'agent';
+
+  let privatePath = join(keysDir, `${safeAgent}.private.pem`);
+  let publicPath = join(keysDir, `${safeAgent}.public.pem`);
+
+  let suffix = 1;
+  while (existsSync(privatePath) || existsSync(publicPath)) {
+    privatePath = join(keysDir, `${safeAgent}-${suffix}.private.pem`);
+    publicPath = join(keysDir, `${safeAgent}-${suffix}.public.pem`);
+    suffix += 1;
+  }
 
   if (verbose) {
     console.log(chalk.dim(`  [debug] Generating RSA-2048 keypair...`));
@@ -89,11 +104,12 @@ function generateKeypair(verbose?: boolean): string {
   });
 
   writeFileSync(privatePath, privateKey, { mode: 0o600 });
-  writeFileSync(publicPath, publicKey);
+  writeFileSync(publicPath, publicKey, { mode: 0o644 });
 
   console.log(chalk.green(`  ✓ Private key: ${privatePath}`));
   console.log(chalk.green(`  ✓ Public key:  ${publicPath}`));
   console.log();
+  console.log(chalk.dim('  Keys are stored in ~/.tether/keys (outside your current repo by default).'));
   console.log(chalk.dim('  Upload the public key to tether.name to complete registration.'));
 
   return privatePath;
