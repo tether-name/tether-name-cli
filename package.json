@@ -1,6 +1,6 @@
 {
   "name": "tether-name-cli",
-  "version": "2.0.4",
+  "version": "2.0.6",
   "description": "CLI for tether.name - AI agent identity verification",
   "type": "module",
   "bin": {
