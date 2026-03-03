@@ -132,6 +132,36 @@ tether agent delete "agent-id"
 tether agent delete "agent-id" --json
 ```
 
+#### `tether agent keys <agentId>`
+
+List key lifecycle entries for an agent (`active`, `grace`, `revoked`).
+
+```bash
+tether agent keys "agent-id"
+tether agent keys "agent-id" --json
+```
+
+#### `tether agent rotate-key <agentId>`
+
+Rotate an agent key. Requires step-up verification via either `--step-up-code` or `--challenge` + `--proof`.
+
+```bash
+tether agent rotate-key "agent-id" \
+  --public-key "BASE64_SPKI_PUBLIC_KEY" \
+  --grace-hours 24 \
+  --step-up-code 123456
+```
+
+#### `tether agent revoke-key <agentId> <keyId>`
+
+Revoke a specific key. Requires step-up verification via either `--step-up-code` or `--challenge` + `--proof`.
+
+```bash
+tether agent revoke-key "agent-id" "key-id" \
+  --reason "compromised" \
+  --step-up-code 123456
+```
+
 ### Domain Management
 
 #### `tether domain list`
@@ -167,6 +197,9 @@ tether agent create "my-bot" --description "Helpful assistant"
 tether domain list
 tether agent create "my-bot" --domain-id "abc123"
 tether agent list
+tether agent keys "agent-id"
+tether agent rotate-key "agent-id" --public-key "BASE64_SPKI_PUBLIC_KEY" --step-up-code 123456
+tether agent revoke-key "agent-id" "key-id" --reason "compromised" --step-up-code 123456
 tether agent delete "agent-id"
 ```
 

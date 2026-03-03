@@ -10,6 +10,9 @@ import { checkCommand } from './commands/check.js';
 import { agentCreateCommand } from './commands/agent-create.js';
 import { agentListCommand } from './commands/agent-list.js';
 import { agentDeleteCommand } from './commands/agent-delete.js';
+import { agentKeyListCommand } from './commands/agent-key-list.js';
+import { agentKeyRotateCommand } from './commands/agent-key-rotate.js';
+import { agentKeyRevokeCommand } from './commands/agent-key-revoke.js';
 import { domainListCommand } from './commands/domain-list.js';
 
 const VERSION = '2.0.4';
@@ -104,6 +107,41 @@ addGlobalOpts(
     .description('Delete an agent by ID')
     .option('--json', 'Output result as JSON'),
 ).action((id, opts) => agentDeleteCommand(id, opts));
+
+// tether agent key list <agent-id>
+addGlobalOpts(
+  agent
+    .command('keys <agentId>')
+    .description('List key lifecycle entries for an agent')
+    .option('--json', 'Output result as JSON'),
+).action((agentId, opts) => agentKeyListCommand(agentId, opts));
+
+// tether agent key rotate <agent-id>
+addGlobalOpts(
+  agent
+    .command('rotate-key <agentId>')
+    .description('Rotate an agent public key (requires step-up)')
+    .requiredOption('--public-key <key>', 'New base64 SPKI public key')
+    .option('--public-key-path <path>', 'Read new public key from file path (overrides --public-key)')
+    .option('--grace-hours <hours>', 'Grace overlap window in hours (default 24)')
+    .option('--reason <text>', 'Rotation reason')
+    .option('--step-up-code <code>', 'Step-up email code')
+    .option('--challenge <code>', 'Challenge code for key-proof step-up')
+    .option('--proof <signature>', 'Signature over challenge for key-proof step-up')
+    .option('--json', 'Output result as JSON'),
+).action((agentId, opts) => agentKeyRotateCommand(agentId, opts));
+
+// tether agent key revoke <agent-id> <key-id>
+addGlobalOpts(
+  agent
+    .command('revoke-key <agentId> <keyId>')
+    .description('Revoke an agent key (requires step-up)')
+    .option('--reason <text>', 'Revocation reason')
+    .option('--step-up-code <code>', 'Step-up email code')
+    .option('--challenge <code>', 'Challenge code for key-proof step-up')
+    .option('--proof <signature>', 'Signature over challenge for key-proof step-up')
+    .option('--json', 'Output result as JSON'),
+).action((agentId, keyId, opts) => agentKeyRevokeCommand(agentId, keyId, opts));
 
 // tether domain (subcommand group)
 const domain = program
