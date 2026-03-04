@@ -98,13 +98,13 @@ The CLI resolves configuration in this order (first wins):
 |---|---|
 | `--agent-id <id>` | Override agent ID |
 | `--key-path <path>` | Override private key file path |
-| `--api-key <key>` | Override API key |
+| `--api-key <key>` | Override management bearer token (API key or JWT) |
 | `--verbose` | Enable debug output |
 | `--json` | Machine-readable JSON output (on supported commands) |
 
 ### Agent Management
 
-Requires an API key (`--api-key`, `TETHER_API_KEY` env var, or config file).
+Requires a management bearer token (`--api-key`, `TETHER_API_KEY` env var, or config file). You can provide either an API key or JWT.
 
 #### `tether agent create <name>`
 
@@ -147,13 +147,16 @@ tether agent keys "agent-id" --json
 
 #### `tether agent rotate-key <agentId>`
 
-Rotate an agent key. Requires step-up verification via either `--step-up-code` or `--challenge` + `--proof`.
+Rotate an agent key. Requires `--public-key` (or `--public-key-path`) and step-up verification via either `--step-up-code` or `--challenge` + `--proof`.
 
 ```bash
 tether agent rotate-key "agent-id" \
   --public-key "BASE64_SPKI_PUBLIC_KEY" \
   --grace-hours 24 \
   --step-up-code 123456
+
+# or read the new key from disk
+# tether agent rotate-key "agent-id" --public-key-path ./public-key.b64 --step-up-code 123456
 ```
 
 #### `tether agent revoke-key <agentId> <keyId>`
@@ -196,7 +199,7 @@ tether challenge
 tether sign "the-challenge-code"
 tether check "the-challenge-code"
 
-# 5. Agent management (requires API key)
+# 5. Agent management (requires bearer token: API key or JWT)
 tether agent create "my-bot" --description "Helpful assistant"
 tether domain list
 tether agent create "my-bot" --domain-id "abc123"
