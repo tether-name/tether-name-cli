@@ -10,6 +10,7 @@ import { checkCommand } from './commands/check.js';
 import { agentCreateCommand } from './commands/agent-create.js';
 import { agentListCommand } from './commands/agent-list.js';
 import { agentDeleteCommand } from './commands/agent-delete.js';
+import { agentUpdateCommand } from './commands/agent-update.js';
 import { agentKeyListCommand } from './commands/agent-key-list.js';
 import { agentKeyRotateCommand } from './commands/agent-key-rotate.js';
 import { agentKeyRevokeCommand } from './commands/agent-key-revoke.js';
@@ -107,6 +108,16 @@ addGlobalOpts(
     .description('Delete an agent by ID')
     .option('--json', 'Output result as JSON'),
 ).action((id, opts) => agentDeleteCommand(id, opts));
+
+// tether agent update <id>
+addGlobalOpts(
+  agent
+    .command('update <id>')
+    .description('Update an agent identity display (domain or account email)')
+    .option('--domain-id <id>', 'Show this verified domain on verification')
+    .option('--show-email', 'Show account email on verification')
+    .option('--json', 'Output result as JSON'),
+).action((id, opts) => agentUpdateCommand(id, opts));
 
 // tether agent key list <agent-id>
 addGlobalOpts(

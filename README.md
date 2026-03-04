@@ -136,6 +136,21 @@ tether agent delete "agent-id"
 tether agent delete "agent-id" --json
 ```
 
+#### `tether agent update <id>`
+
+Update which identity is shown when that agent is verified.
+
+```bash
+# Show a verified domain
+tether agent update "agent-id" --domain-id "domain-id"
+
+# Revert to showing account email
+tether agent update "agent-id" --show-email
+
+# JSON output
+tether agent update "agent-id" --domain-id "domain-id" --json
+```
+
 #### `tether agent keys <agentId>`
 
 List key lifecycle entries for an agent (`active`, `grace`, `revoked`).
@@ -203,6 +218,8 @@ tether check "the-challenge-code"
 tether agent create "my-bot" --description "Helpful assistant"
 tether domain list
 tether agent create "my-bot" --domain-id "abc123"
+tether agent update "agent-id" --show-email
+tether agent update "agent-id" --domain-id "abc123"
 tether agent list
 tether agent keys "agent-id"
 tether agent rotate-key "agent-id" --public-key "BASE64_SPKI_PUBLIC_KEY" --step-up-code 123456
