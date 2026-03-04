@@ -15,7 +15,7 @@ import { agentKeyRotateCommand } from './commands/agent-key-rotate.js';
 import { agentKeyRevokeCommand } from './commands/agent-key-revoke.js';
 import { domainListCommand } from './commands/domain-list.js';
 
-const VERSION = '2.0.6';
+const VERSION = '2.0.7';
 
 const program = new Command();
 
